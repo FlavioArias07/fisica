@@ -21,7 +21,7 @@
         }
         h1 {
             text-align: center;
-            color: #333;
+            color: #d32f2f;
             margin-bottom: 30px;
         }
         .chart-container {
@@ -56,16 +56,33 @@
         .data-item strong {
             color: #007bff;
         }
+        .correction-notice {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            color: #721c24;
+        }
         .conclusion {
-            background-color: #fff3cd;
-            border: 1px solid #ffeaa7;
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
             padding: 20px;
             border-radius: 5px;
             margin-top: 30px;
+            color: #155724;
         }
         .conclusion h3 {
-            color: #856404;
+            color: #155724;
             margin-top: 0;
+        }
+        .calculation-box {
+            background-color: #e3f2fd;
+            border: 1px solid #90caf9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: monospace;
         }
     </style>
 </head>
@@ -132,7 +149,7 @@
                     <strong>Velocidad final:</strong> 0 m/s (0 km/h)
                 </div>
                 <div class="data-item">
-                    <strong>Tiempo de reacción:</strong> 0.30 s
+                    <strong>Tiempo de reacción:</strong> 0.30 s (NORMAL)
                 </div>
                 <div class="data-item">
                     <strong>Tiempo de frenado:</strong> 2.10 s
@@ -153,21 +170,23 @@
         <div class="chart-container">
             <canvas id="accelerationChart"></canvas>
         </div>
-
-        <div class="conclusion">
-            <h3>Conclusión Técnica</h3>
-            <p>El tiempo de reacción calculado de <strong>0.30 segundos</strong> corresponde al de un conductor en estado <strong>NORMAL</strong>, según la Tabla 2 proporcionada. Esto contradice el testimonio del testigo que afirmaba que el conductor estaba en estado etílico (que tendría un tiempo de reacción de 0.60 s).</p>
-            <p>La evidencia física sugiere que el conductor del Auto A no se encontraba bajo los efectos del alcohol al momento del accidente.</p>
-        </div>
+        
     </div>
 
-    <script>
-        // Datos para los gráficos
-        const timeLabels = [0, 0.30, 0.31, 1.0, 1.5, 2.0, 2.40];
-        const velocityData = [10.49, 10.49, 10.49, 7.04, 4.59, 2.14, 0];
+    <script>        
+        const timeLabels = [0, 0.30, 0.60, 1.0, 1.5, 2.0, 2.40];
+        const velocityData = [
+            10.49,
+            10.49,
+            8.99,
+            7.49,
+            4.99,
+            2.49,
+            0
+        ];
+        
         const accelerationData = [0, 0, -5.0, -5.0, -5.0, -5.0, -5.0];
 
-        // Configuración del gráfico de velocidad
         const velocityCtx = document.getElementById('velocityChart').getContext('2d');
         new Chart(velocityCtx, {
             type: 'line',
@@ -192,7 +211,7 @@
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Velocidad vs Tiempo - Auto A',
+                        text: 'Velocidad vs Tiempo - Auto A (CORREGIDO)',
                         font: {
                             size: 16,
                             weight: 'bold'
@@ -234,31 +253,10 @@
                             color: 'rgba(0,0,0,0.1)'
                         }
                     }
-                },
-                elements: {
-                    line: {
-                        tension: 0
-                    }
-                },
-                annotations: {
-                    line1: {
-                        type: 'line',
-                        xMin: 0.30,
-                        xMax: 0.30,
-                        borderColor: 'red',
-                        borderWidth: 2,
-                        borderDash: [5, 5],
-                        label: {
-                            content: 'Inicio del frenado',
-                            enabled: true,
-                            position: 'top'
-                        }
-                    }
                 }
             }
         });
 
-        // Configuración del gráfico de aceleración
         const accelerationCtx = document.getElementById('accelerationChart').getContext('2d');
         new Chart(accelerationCtx, {
             type: 'line',
@@ -284,7 +282,7 @@
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Aceleración vs Tiempo - Auto A',
+                        text: 'Aceleración vs Tiempo - Auto A (CORREGIDO)',
                         font: {
                             size: 16,
                             weight: 'bold'
@@ -325,11 +323,6 @@
                             display: true,
                             color: 'rgba(0,0,0,0.1)'
                         }
-                    }
-                },
-                elements: {
-                    line: {
-                        tension: 0
                     }
                 }
             }
